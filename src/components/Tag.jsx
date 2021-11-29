@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 const Tag = (props) => {
   return (
     <View style={styles.container}>
-      <Text color='tag' {...props}/>
+      <Text color='inverse' {...props}/>
     </View>
   );
 };

@@ -26,7 +26,7 @@ const AppBarTab = ({linkTo='/', onPress=null, ...props} ) => {
     <Pressable style={styles.tabItem} onPress={onPress}>
       <Link to={linkTo}>
         <Text 
-          color= 'tab' 
+          color= 'inverse' 
           fontSize='tab' 
           fontWeight="bold"
           {...props} 
