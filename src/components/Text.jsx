@@ -10,14 +10,14 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.main,
     fontWeight: theme.fontWeights.normal,
   },
-  colorTextTab: {
-    color: theme.colors.appBarText,
-  },
-  colorTextTag: {
-    color: theme.colors.tagText,
+  colorTextInverse: {
+    color: theme.colors.inverse,
   },
   colorTextSecondary: {
     color: theme.colors.textSecondary,
+  },
+  colorError: {
+    color: theme.colors.error,
   },
   colorPrimary: {
     color: theme.colors.primary,
@@ -38,8 +38,8 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
     styles.text,
     color === 'textSecondary' && styles.colorTextSecondary,
     color === 'primary' && styles.colorPrimary,
-    color === 'tab' && styles.colorTextTab,
-    color === 'tag' && styles.colorTextTag,
+    color === 'inverse' && styles.colorTextInverse,
+    color === 'error' && styles.colorError,
     fontSize === 'subheading' && styles.fontSizeSubheading,
     fontSize === 'tab' && styles.fontSizeTab,
     fontWeight === 'bold' && styles.fontWeightBold,
