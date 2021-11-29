@@ -1,11 +1,13 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import Subheading from './Subheading';
+import Text from './Text';
 
 const RepositoryItem = ({ item }) => {
 
 
   return (
-    <View>
+    <>
+      <Subheading>{item.fullName}</Subheading>
       <Text>Full name: {item.fullName}</Text>
       <Text>Description: {item.description}</Text>
       <Text>Language: {item.language}</Text>      
@@ -13,7 +15,7 @@ const RepositoryItem = ({ item }) => {
       <Text>Stars: {item.stargazersCount}</Text>
       <Text>Rating: {item.ratingAverage}</Text>
       <Text>Reviews: {item.reviewCount}</Text>
-    </View>
+    </>
   );
 };
 
