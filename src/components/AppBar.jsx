@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
+import { Link } from 'react-router-native';
 import Constants from 'expo-constants';
 import theme from '../theme';
 import Text from './Text';
@@ -32,9 +33,16 @@ const AppBarTab = (props) => {
 const AppBar = () => {
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => console.log('Repositories')}>
-        <AppBarTab style={styles.tabItem}>Repositories</AppBarTab>
-      </Pressable>
+      <Link to='/'>
+        {/* <Pressable onPress={() => console.log('Repositories')}> */}
+          <AppBarTab style={styles.tabItem}>Repositories</AppBarTab>
+        {/* </Pressable> */}
+      </Link>        
+      <Link to='/signin' onClick={() => console.log('click signing')}>
+        {/* <Pressable onPress={() => console.log('Repositories')}> */}
+          <AppBarTab style={styles.tabItem}>Sign-in</AppBarTab>
+        {/* </Pressable> */}
+      </Link>
     </View>
   );
 };
