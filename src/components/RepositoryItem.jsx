@@ -1,21 +1,34 @@
 import React from 'react';
-import Subheading from './Subheading';
-import Text from './Text';
+import { View, StyleSheet } from 'react-native';
+
+import StatsList from './StatsList';
+import ProfileInfo from './ProfileInfo';
+import theme from '../theme';
+
+const styles = StyleSheet.create({
+  item: {
+    backgroundColor: theme.colors.itemBackground,
+    display: 'flex',
+  },
+  mainBox: {
+    paddingHorizontal: 5,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  statsBox: {
+    paddingHorizontal: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between', 
+  },
+});
 
 const RepositoryItem = ({ item }) => {
 
-
   return (
-    <>
-      <Subheading>{item.fullName}</Subheading>
-      <Text>Full name: {item.fullName}</Text>
-      <Text>Description: {item.description}</Text>
-      <Text>Language: {item.language}</Text>      
-      <Text>Forks: {item.forksCount}</Text>
-      <Text>Stars: {item.stargazersCount}</Text>
-      <Text>Rating: {item.ratingAverage}</Text>
-      <Text>Reviews: {item.reviewCount}</Text>
-    </>
+    <View style={styles.item}>
+      <ProfileInfo containerStyle={styles.mainBox} item={item}/>
+      <StatsList style={styles.statsBox} item={item}/>
+    </View>
   );
 };
 

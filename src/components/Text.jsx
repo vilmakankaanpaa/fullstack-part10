@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
   colorTextTab: {
     color: theme.colors.appBarText,
   },
+  colorTextTag: {
+    color: theme.colors.tagText,
+  },
   colorTextSecondary: {
     color: theme.colors.textSecondary,
   },
@@ -36,6 +39,7 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
     color === 'textSecondary' && styles.colorTextSecondary,
     color === 'primary' && styles.colorPrimary,
     color === 'tab' && styles.colorTextTab,
+    color === 'tag' && styles.colorTextTag,
     fontSize === 'subheading' && styles.fontSizeSubheading,
     fontSize === 'tab' && styles.fontSizeTab,
     fontWeight === 'bold' && styles.fontWeightBold,

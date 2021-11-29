@@ -68,7 +68,7 @@ const RepositoryList = () => {
   };
 
   return (
-    <View>
+    <View >
       <FlatList
         data={repositories}
         ItemSeparatorComponent={ItemSeparator}
