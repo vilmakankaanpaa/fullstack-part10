@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Pressable } from 'react-native';
+import { View, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { Link } from 'react-router-native';
 import Constants from 'expo-constants';
 import theme from '../theme';
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingHorizontal: 10,
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'flex-start',
     backgroundColor: theme.colors.appBarBackground,
   },
@@ -21,28 +21,32 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppBarTab = (props) => {
+const AppBarTab = ({linkTo='/', onPress=null, ...props} ) => {
   return (
-    <Text 
-      color= 'tab' fontSize='tab' fontWeight="bold"
-      {...props} 
-    />
+    <Pressable style={styles.tabItem} onPress={onPress}>
+      <Link to={linkTo}>
+        <Text 
+          color= 'tab' 
+          fontSize='tab' 
+          fontWeight="bold"
+          {...props} 
+        />
+      </Link>
+    </Pressable>
   );
 };
 
 const AppBar = () => {
   return (
     <View style={styles.container}>
-      <Link to='/'>
-        {/* <Pressable onPress={() => console.log('Repositories')}> */}
-          <AppBarTab style={styles.tabItem}>Repositories</AppBarTab>
-        {/* </Pressable> */}
-      </Link>        
-      <Link to='/signin' onClick={() => console.log('click signing')}>
-        {/* <Pressable onPress={() => console.log('Repositories')}> */}
-          <AppBarTab style={styles.tabItem}>Sign-in</AppBarTab>
-        {/* </Pressable> */}
-      </Link>
+      <ScrollView horizontal>
+        <AppBarTab onPress={() => console.log('Repositories ->')}
+          linkTo='/'>Repositories
+        </AppBarTab>
+        <AppBarTab  onPress={() => console.log('Signing ->')}
+          linkTo='/signin'>Sign-in
+        </AppBarTab>
+      </ScrollView>
     </View>
   );
 };
