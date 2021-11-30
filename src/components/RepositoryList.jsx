@@ -23,7 +23,6 @@ const RepositoryList = () => {
   let repositoryNodes = [];
   if (result.data) {
     repositoryNodes = result.data.repositories.edges.map(item => item.node);
-    console.log(repositoryNodes);
   }
 
   const renderItem = ({ item }) => {
