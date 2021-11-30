@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, View, StyleSheet } from 'react-native';
+import { useHistory } from "react-router-native";
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import Text from './Text';
@@ -56,12 +57,17 @@ const SignInForm = ({ onSubmit }) => {
 const SignIn = () => {
   const [signIn] = useSignIn();
 
+  let history = useHistory();
+
   const onSubmit = async (values) => {
     const { username, password } = values;
 
     try {
-      const { data } = await signIn({ username, password });
-      console.log('data', data.authorize.accessToken);
+      const data = await signIn({ username, password });
+      if (data) {
+        // auth successful --> redirect
+        history.push('/');
+      }
     } catch (e) {
       console.log('e:', e);
     }
