@@ -5,5 +5,6 @@
 //   sourceExts: [
 //     ...defaultResolver.sourceExts,
 //     "cjs",
+//     "jsx"
 //   ],
 // };
