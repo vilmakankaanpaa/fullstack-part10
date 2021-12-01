@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { useHistory } from "react-router-native";
 import Constants from 'expo-constants';
 import { useQuery } from '@apollo/client';
 import { useApolloClient } from '@apollo/client';
-import useAuthStorage from '../hooks/useAuthStorage';
-import theme from '../theme';
-import Text from './Text';
+import useAuthStorage from '../../hooks/useAuthStorage';
+import theme from '../../theme';
+import AppBarTab from './AppBarTab';
 
-import { AUTHORIZED_USER } from '../graphql/queries';
+import { AUTHORIZED_USER } from '../../graphql/queries';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,18 +25,6 @@ const styles = StyleSheet.create({
     flexGrow: 0,
   },
 });
-
-const AppBarTab = ({onPress, text, ...props} ) => {
-  return (
-    <Pressable style={styles.tabItem} onPress={onPress}>
-      <Text 
-        color= 'inverse' 
-        fontSize='tab' 
-        fontWeight="bold"
-        {...props}>{text}</Text>
-    </Pressable>
-  );
-};
 
 const AppBar = () => {
   const authStorage = useAuthStorage();
@@ -62,9 +50,9 @@ const AppBar = () => {
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
-        <AppBarTab onPress={() => redirect('/')} text='Repositories'/>
-        {!authorized && <AppBarTab onPress={() => redirect('/signin')} text='Sign-in'/>}
-        {authorized && <AppBarTab onPress={() => handleLogOut()} text='Log-out'/>}
+        <AppBarTab styles={styles.tabItem} onPress={() => redirect('/')} text='Repositories'/>
+        {!authorized && <AppBarTab styles={styles.tabItem} onPress={() => redirect('/signin')} text='Sign-in'/>}
+        {authorized && <AppBarTab styles={styles.tabItem} onPress={() => handleLogOut()} text='Log-out'/>}
       </ScrollView>
     </View>
   );

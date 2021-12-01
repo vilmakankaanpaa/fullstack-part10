@@ -26,17 +26,4 @@ const StatsItem = ({ name, value, testID }) => {
   );
 };
 
-const StatsList = ({ item, style }) => {
-
-  return (
-    <View style={style}>
-      <StatsItem testID='forks' name='Forks' value={item.forksCount}/>
-      <StatsItem testID='stars' name='Stars' value={item.stargazersCount}/>
-      <StatsItem testID='reviews' name='Reviews' value={item.reviewCount}/>
-      <StatsItem testID='rating' name='Rating' value={item.ratingAverage}/>
-    </View>
-  );
-
-};
-
-export default StatsList;
+export default StatsItem;

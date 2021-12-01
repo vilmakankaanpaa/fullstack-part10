@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Route, Switch } from 'react-router-native';
+import { Route, Switch, useRouteMatch } from 'react-router-native';
 import AppBar from './AppBar';
 import RepositoryList from './RepositoryList';
 import theme from '../theme';
 import SignIn from './SignIn';
+import RepositoryItem from './RepositoryItem';
+import useRepositories from '../hooks/useRepositories';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,6 +17,18 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
+
+  const { repositories } = useRepositories();
+
+  const repositoryNodes = repositories
+  ? repositories.edges.map((edge) => edge.node)
+  : [];
+
+  const repoMatch = useRouteMatch('/:id');
+  const repo = repoMatch
+    ? repositoryNodes.find(repo => repo.id === repoMatch.params.id)
+    : null;
+
   return (
     <View style={styles.container}>
       <AppBar />
@@ -27,7 +41,10 @@ const Main = () => {
         <Route path="/signin">
           <SignIn />
         </Route>
-        
+
+        <Route path="/:id" >
+          <RepositoryItem item={repo} singleView={true}/>
+        </Route>
 
       </Switch>
     </View>
