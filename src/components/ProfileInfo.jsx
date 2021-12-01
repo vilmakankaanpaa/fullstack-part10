@@ -27,12 +27,12 @@ const MainInfo = ({ item }) => {
     <View style={styles.mainInfo}>
         
       <View style={styles.header}>
-        <Subheading>{item.fullName}</Subheading>
-        <Text >{item.description}</Text>
+        <Subheading testID='repoName'>{item.fullName}</Subheading>
+        <Text testID='description'>{item.description}</Text>
       </View>
     
       <View>
-        <Tag>{item.language}</Tag>      
+        <Tag testID='language'>{item.language}</Tag>      
       </View>
         
     </View>
