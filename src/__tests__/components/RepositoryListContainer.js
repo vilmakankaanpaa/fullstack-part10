@@ -49,12 +49,7 @@ describe('RepositoryList', () => {
         ],
       };
 
-      const { debug, getAllByTestId } = render(<RepositoryListContainer repositories={repositories} />);
-
-      //debug();
-
-      // get all repos with:
-      // getAllByTestId('repositoriesItem')[0])
+      const { getAllByTestId } = render(<RepositoryListContainer repositories={repositories} />);
 
       expect(getAllByTestId('repoName')[0]).toHaveTextContent('jaredpalmer/formik');
       expect(getAllByTestId('description')[0]).toHaveTextContent('Build forms in React, without the tears');
@@ -71,12 +66,6 @@ describe('RepositoryList', () => {
       expect(getAllByTestId('stars')[1]).toHaveTextContent('1.8k');
       expect(getAllByTestId('reviews')[1]).toHaveTextContent(3);
       expect(getAllByTestId('rating')[1]).toHaveTextContent(72);
-
-
-
-
-
-
 
     });
   });
