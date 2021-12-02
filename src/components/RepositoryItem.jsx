@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.itemBackground,
     padding: 15,
-    marginBottom: 10
   },
   topContainer: {
     flexDirection: 'row',

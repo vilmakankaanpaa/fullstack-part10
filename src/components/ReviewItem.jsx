@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.itemBackground,
     padding: 15,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginTop: 10
   },
   ratingContainer: {
     flexGrow: 0,

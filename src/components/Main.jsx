@@ -5,6 +5,7 @@ import AppBar from './AppBar';
 import RepositoryList from './RepositoryList';
 import theme from '../theme';
 import SignIn from './SignIn';
+import SignUp from './SignUp';
 import useRepositories from '../hooks/useRepositories';
 import SingleRepository from './SingleRepository';
 import CreateReview from './CreateReview';
@@ -41,6 +42,10 @@ const Main = () => {
       
         <Route path="/signin">
           <SignIn />
+        </Route>
+
+        <Route path="/signup">
+          <SignUp />
         </Route>
 
         <Route path="/createreview">

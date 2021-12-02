@@ -75,9 +75,6 @@ const CreateReview = () => {
   const onSubmit = async (values) => {
     const { repositoryOwner, repositoryName, rating, reviewText } = values;
 
-    console.log(values);
-    console.log(rating, Number(rating));
-
     try{
       const response = await createReview({ 
         variables: {
