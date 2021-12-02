@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList, View, StyleSheet, Pressable } from 'react-native';
+import { useHistory } from "react-router-native";
 
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
-import { useHistory } from "react-router-native";
+import SortingSelector from './SortingSelector';
 
 const styles = StyleSheet.create({
   separator: {
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, SortingSelector }) => {
 
   let history = useHistory();
 
@@ -43,15 +44,25 @@ export const RepositoryListContainer = ({ repositories }) => {
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={renderItem}
+      ListHeaderComponent={() => <SortingSelector />}
     />
   );
 };
 
 const RepositoryList = () => {
 
-  const { repositories } = useRepositories();
+  // const [orderBy, setOrderBy] = useState('CREATED_AT');
+  // const [orderDirection, setOrderDirection] = useState('ASC');
 
-  return <RepositoryListContainer repositories={repositories} />;
+  const [sorting, setSorting] = useState('Latest repositories');
+
+  const { repositories } = useRepositories(sorting);
+
+  const props = {
+    sorting, setSorting
+  };
+
+  return <RepositoryListContainer repositories={repositories} SortingSelector={() => SortingSelector(props)} />;
   
 };
 

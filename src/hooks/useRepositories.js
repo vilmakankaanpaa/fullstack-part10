@@ -2,9 +2,38 @@ import { useQuery } from '@apollo/client';
 
 import { GET_REPOSITORIES } from '../graphql/queries';
 
-const useRepositories = () => {
+const options = {
+  direction: {
+    ascending: 'ASC',
+    descending: 'DESC'
+  },
+  by: {
+    creationDate: 'CREATED_AT',
+    averageRating: 'RATING_AVERAGE'
+  }
+};
+
+const useRepositories = (sorting) => {
+  
+  let orderBy;
+  let orderDirection;
+
+  const {direction, by} = options;
+
+  if (sorting === 'Latest repositories') {
+    orderBy = by.creationDate;
+    orderDirection = direction.descending;
+  } else if (sorting === 'Highest rated repositories') {
+    orderBy = by.averageRating;
+    orderDirection = direction.descending;
+  } else if (sorting === 'Lowest rated repositories') {
+    orderBy = by.averageRating;
+    orderDirection = direction.ascending;
+  } 
+
   const { data, ...result } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',
+    variables: { orderBy, orderDirection }
   });
 
   return { repositories: data ? data.repositories : undefined, ...result };
