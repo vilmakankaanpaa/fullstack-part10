@@ -1,29 +1,19 @@
 import React from 'react';
-import { Pressable, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useHistory } from "react-router-native";
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import Text from './Text';
 import FormikTextInput from './FormikTextInput';
-import theme from '../theme';
 import useSignIn from '../hooks/useSignIn';
+import Button from './Button';
 
 const styles = StyleSheet.create({
   form: {
-    display: 'flex',
-    padding: 10
+    backgroundColor: 'white',
+    padding: 15
   },
-  button: {
-    height: 50,
-    margin: 5,
-    padding: 10,
-    borderRadius: 5,
-    backgroundColor: theme.colors.primary,
-  },
-  buttonText: {
-    padding: 5,
-    alignSelf: 'center',
-    fontSize: 16
+  fieldContainer: {
+    marginBottom: 15,
   }
 });
 
@@ -45,11 +35,13 @@ const SignInForm = ({ onSubmit }) => {
 
   return (
     <View style={styles.form}>
-      <FormikTextInput testID='usernameField' name="username" placeholder="Username" />
-      <FormikTextInput secureTextEntry testID='passwordField' name="password" placeholder="Password"/>
-      <Pressable testID='submitButton' onPress={onSubmit} style={styles.button}>
-        <Text fontWeight='bold' color='inverse' style={styles.buttonText}>Sign in</Text>
-      </Pressable>
+      <View style={styles.fieldContainer}>
+        <FormikTextInput testID='usernameField' name="username" placeholder="Username" />
+      </View>
+      <View style={styles.fieldContainer}>
+        <FormikTextInput secureTextEntry testID='passwordField' name="password" placeholder="Password"/>
+      </View>
+      <Button testID='submitButton' onPress={onSubmit}>Sign in</Button>
     </View>
   );
 };
@@ -74,7 +66,6 @@ const SignIn = () => {
     try {
       const data = await signIn({ username, password });
       if (data) {
-        // auth successful --> redirect
         history.push('/');
       }
     } catch (e) {

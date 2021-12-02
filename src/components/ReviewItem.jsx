@@ -45,7 +45,7 @@ const formatDate = (timestamp) => {
   return format(date,'dd.MM.yyyy');
 };
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({review}) => {
 
   const {
     rating,

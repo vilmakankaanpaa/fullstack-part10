@@ -25,9 +25,6 @@ const styles = StyleSheet.create({
   fontSizeSubheading: {
     fontSize: theme.fontSizes.subheading,
   },
-  fontSizeTab: {
-    fontSize: theme.fontSizes.tab,
-  },
   fontWeightBold: {
     fontWeight: theme.fontWeights.bold,
   }
@@ -41,7 +38,6 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
     color === 'inverse' && styles.colorTextInverse,
     color === 'error' && styles.colorError,
     fontSize === 'subheading' && styles.fontSizeSubheading,
-    fontSize === 'tab' && styles.fontSizeTab,
     fontWeight === 'bold' && styles.fontWeightBold,
     style,
   ];
