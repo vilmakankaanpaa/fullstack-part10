@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Picker } from '@react-native-picker/picker';
+import { Searchbar } from 'react-native-paper';
 import theme from "../theme";
 
 const styles = StyleSheet.create({
@@ -14,13 +15,21 @@ const styles = StyleSheet.create({
     borderWidth: 0, 
     backgroundColor: theme.colors.mainBackground,
     fontSize: theme.fontSizes.tab
+  },
+  searchBar: {
+    margin: 10,
   }
 });
 
-const SortingSelector = ({ sorting, setSorting }) => {
+const SortingSelector = ({ sorting, setSorting, searchQuery, onChangeSearch }) => {
 
   return (
     <View style={styles.container}>
+      <Searchbar style={styles.searchBar}
+        placeholder="Search"
+        onChangeText={onChangeSearch}
+        value={searchQuery}
+      />
       <Picker
         style={styles.picker}
         selectedValue={sorting}

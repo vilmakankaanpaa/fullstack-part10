@@ -13,7 +13,7 @@ const options = {
   }
 };
 
-const useRepositories = (sorting) => {
+const useRepositories = (sorting, searchKeyword) => {
   
   let orderBy;
   let orderDirection;
@@ -33,7 +33,7 @@ const useRepositories = (sorting) => {
 
   const { data, ...result } = useQuery(GET_REPOSITORIES, {
     fetchPolicy: 'cache-and-network',
-    variables: { orderBy, orderDirection }
+    variables: { orderBy, orderDirection, searchKeyword }
   });
 
   return { repositories: data ? data.repositories : undefined, ...result };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDebounce } from 'use-debounce';
 import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import { useHistory } from "react-router-native";
 
@@ -14,23 +15,17 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories, SortingSelector }) => {
+export class RepositoryListContainer extends React.Component{
 
-  let history = useHistory();
+  renderHeader = () => {
+    const { SortingSelector } = this.props;
 
-  const repositoryNodes = repositories
-    ? repositories.edges.map((edge) => edge.node)
-    : [];
-
-  const redirect = (to) => {
-    console.log('redirecting to ',to);
-    history.push(to);
+    return <SortingSelector />;
   };
 
-
-  const renderItem = ({ item }) => {
+  renderItem = ({ item }) => {
     return (
-      <Pressable onPress={() => redirect(`/${item.id}`)}>
+      <Pressable onPress={() => this.props.history.push(`/${item.id}`)}>
         <RepositoryItem 
           key={item.id}
           item={item}
@@ -38,31 +33,40 @@ export const RepositoryListContainer = ({ repositories, SortingSelector }) => {
       </Pressable>
     );
   };
-
-  return (
-    <FlatList
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={renderItem}
-      ListHeaderComponent={() => <SortingSelector />}
-    />
-  );
-};
+  
+  render() {
+  
+    return (
+      <FlatList
+        data={this.props.repositoryNodes}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={this.renderItem}
+        ListHeaderComponent={this.renderHeader}
+      />
+    );
+  }
+}
 
 const RepositoryList = () => {
 
-  // const [orderBy, setOrderBy] = useState('CREATED_AT');
-  // const [orderDirection, setOrderDirection] = useState('ASC');
-
   const [sorting, setSorting] = useState('Latest repositories');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchKeyword] = useDebounce(searchQuery, 1000);
+  const history = useHistory();
+  const { repositories } = useRepositories(sorting, searchKeyword);
 
-  const { repositories } = useRepositories(sorting);
+  const repositoryNodes = repositories
+  ? repositories.edges.map((edge) => edge.node)
+  : [];
+
+
+  const onChangeSearch = query => setSearchQuery(query);
 
   const props = {
-    sorting, setSorting
+    sorting, setSorting, searchQuery, onChangeSearch
   };
 
-  return <RepositoryListContainer repositories={repositories} SortingSelector={() => SortingSelector(props)} />;
+  return <RepositoryListContainer repositoryNodes={repositoryNodes} SortingSelector={() => SortingSelector(props)} history={history} />;
   
 };
 
