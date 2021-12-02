@@ -77,8 +77,6 @@ const styles = StyleSheet.create({
 
 const RepositoryItem = ({ item, singleView=false }) => {
 
-  console.log('single?',singleView);
-
   const {
     fullName,
     description,

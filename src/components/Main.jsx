@@ -5,8 +5,8 @@ import AppBar from './AppBar';
 import RepositoryList from './RepositoryList';
 import theme from '../theme';
 import SignIn from './SignIn';
-import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
+import SingleRepository from './SingleRepository';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,7 +25,7 @@ const Main = () => {
   : [];
 
   const repoMatch = useRouteMatch('/:id');
-  const repo = repoMatch
+  const repository = repoMatch
     ? repositoryNodes.find(repo => repo.id === repoMatch.params.id)
     : null;
 
@@ -43,7 +43,8 @@ const Main = () => {
         </Route>
 
         <Route path="/:id" >
-          <RepositoryItem item={repo} singleView={true}/>
+          {/* <RepositoryItem item={repo} singleView={true}/> */}
+          <SingleRepository repository={repository} />
         </Route>
 
       </Switch>
