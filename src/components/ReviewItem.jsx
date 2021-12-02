@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
   },
-  nameText: {
+  titleText: {
     marginBottom: 5,
     fontWeight: 'bold'
   },
@@ -46,14 +46,17 @@ const formatDate = (timestamp) => {
   return format(date,'dd.MM.yyyy');
 };
 
-const ReviewItem = ({review}) => {
+const ReviewItem = (props) => {
+
+  const myReviews = props.myReviews ? props.myReviews : false;
 
   const {
+    repository,
     rating,
     user,
     createdAt,
     text
-  } = review;
+  } = props.review;
 
   return (
     <View style={styles.container}>
@@ -61,7 +64,8 @@ const ReviewItem = ({review}) => {
         <Text style={styles.ratingText}>{rating}</Text>
       </View>
       <View style={styles.rightContainer}>
-        <Text style={styles.nameText}>{user.username}</Text>
+        {!myReviews && <Text style={styles.titleText}>{user.username}</Text>}
+        {myReviews && <Text style={styles.titleText}>{repository.fullName}</Text>}
         <Text style={styles.dateText} color='textSecondary'>{formatDate(createdAt)}</Text>
         <Text style={styles.reviewText}>{text}</Text>
       </View>

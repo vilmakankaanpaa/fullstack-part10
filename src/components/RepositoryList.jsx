@@ -13,19 +13,40 @@ const styles = StyleSheet.create({
   },
 });
 
+const options = {
+  direction: {
+    ascending: 'ASC',
+    descending: 'DESC'
+  },
+  by: {
+    creationDate: 'CREATED_AT',
+    averageRating: 'RATING_AVERAGE'
+  }
+};
+
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export class RepositoryListContainer extends React.Component{
+export const RepositoryListContainer = ({ 
+  repositories, 
+  SortingSelector,
+  onEndReach
+ }) => {
 
-  renderHeader = () => {
-    const { SortingSelector } = this.props;
+  let history = useHistory();
 
-    return <SortingSelector />;
+  const repositoryNodes = repositories
+    ? repositories.edges.map((edge) => edge.node)
+    : [];
+
+  const redirect = (to) => {
+    console.log('redirecting to ',to);
+    history.push(to);
   };
 
-  renderItem = ({ item }) => {
+
+  const renderItem = ({ item }) => {
     return (
-      <Pressable onPress={() => this.props.history.push(`/${item.id}`)}>
+      <Pressable onPress={() => redirect(`/${item.id}`)}>
         <RepositoryItem 
           key={item.id}
           item={item}
@@ -33,32 +54,40 @@ export class RepositoryListContainer extends React.Component{
       </Pressable>
     );
   };
-  
-  render() {
-  
-    return (
-      <FlatList
-        data={this.props.repositoryNodes}
-        ItemSeparatorComponent={ItemSeparator}
-        renderItem={this.renderItem}
-        ListHeaderComponent={this.renderHeader}
-      />
-    );
-  }
-}
+
+  return (
+    <FlatList
+      data={repositoryNodes}
+      ItemSeparatorComponent={ItemSeparator}
+      renderItem={renderItem}
+      ListHeaderComponent={() => <SortingSelector />}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
+    />
+  );
+};
 
 const RepositoryList = () => {
 
   const [sorting, setSorting] = useState('Latest repositories');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchKeyword] = useDebounce(searchQuery, 1000);
-  const history = useHistory();
-  const { repositories } = useRepositories(sorting, searchKeyword);
 
-  const repositoryNodes = repositories
-  ? repositories.edges.map((edge) => edge.node)
-  : [];
+  const {direction, by} = options;
 
+  let orderBy, orderDirection;
+  if (sorting === 'Latest repositories') {
+    orderBy = by.creationDate;
+    orderDirection = direction.descending;
+  } else if (sorting === 'Highest rated repositories') {
+    orderBy = by.averageRating;
+    orderDirection = direction.descending;
+  } else if (sorting === 'Lowest rated repositories') {
+    orderBy = by.averageRating;
+    orderDirection = direction.ascending;
+  } 
+
+  const { repositories, fetchMore } = useRepositories({first: 12, orderBy, orderDirection, searchKeyword});
 
   const onChangeSearch = query => setSearchQuery(query);
 
@@ -66,7 +95,16 @@ const RepositoryList = () => {
     sorting, setSorting, searchQuery, onChangeSearch
   };
 
-  return <RepositoryListContainer repositoryNodes={repositoryNodes} SortingSelector={() => SortingSelector(props)} history={history} />;
+  const onEndReach = () => {
+    console.log('You have reached the end of the list');
+    fetchMore();
+  };
+
+  return <RepositoryListContainer
+      repositories={repositories} 
+      SortingSelector={() => SortingSelector(props)} 
+      onEndReach={onEndReach}
+    />;
   
 };
 

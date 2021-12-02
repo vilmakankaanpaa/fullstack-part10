@@ -91,6 +91,7 @@ const AppBar = () => {
     <View style={styles.container}>
       <ScrollView horizontal>
         <AppBarTab onPress={() => redirect('/')} text='Repositories'/>
+        {authorized && <AppBarTab onPress={() => redirect('/myreviews')} text='My reviews' />}
         {authorized && <AppBarTab onPress={() => redirect('/createreview')} text='Create a review'/>}
         {!authorized && <AppBarTab onPress={() => redirect('/signin')} text='Sign in'/>}
         {authorized && <AppBarTab onPress={() => handleLogOut()} text='Log out'/>}

@@ -2,15 +2,20 @@ import { gql } from '@apollo/client';
 
 export const GET_REPOSITORIES = gql`
   query repositories(
+    $first: Int,
+    $after: String,
     $orderBy: AllRepositoriesOrderBy,
     $orderDirection: OrderDirection,
     $searchKeyword: String
   ){
     repositories (
+      first: $first
+      after: $after
       orderBy: $orderBy
       orderDirection: $orderDirection
       searchKeyword: $searchKeyword
     ) {
+      totalCount
       edges {
         node {
           id
@@ -23,6 +28,11 @@ export const GET_REPOSITORIES = gql`
           forksCount
           ratingAverage
         }
+      }
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
       }
     }
   }
@@ -41,24 +51,36 @@ export const GET_REPOSITORY = gql`
 `;
 
 export const GET_REVIEWS = gql`
-  query repository($id: ID!) {
+  query repository($id: ID!, $first: Int, $after: String) {
     repository(
       id: $id
     ) {
       id
       fullName
-      reviews {
+      reviews(
+        first: $first,
+        after: $after
+      ) {
+        totalCount
         edges {
           node {
             id
+            fullName
             text
             rating
             createdAt
+            repositoryId
             user {
               id
               username
             }
           }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
         }
       }
     }
@@ -66,10 +88,27 @@ export const GET_REVIEWS = gql`
 `;
 
 export const AUTHORIZED_USER = gql`
-  query {
+  query getAuthorizedUser($includeReviews: Boolean = false) {
     authorizedUser {
       id
       username
+      reviews @include(if: $includeReviews) {
+        edges {
+          node {
+            id
+            repository {
+              fullName
+              id
+            }
+            rating
+            createdAt
+            text
+            user {
+              username
+            }
+          }
+        }
+      }
     }
   }
 `;
